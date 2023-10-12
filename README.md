@@ -1,4 +1,12 @@
 # matchmaker_lol
+
+Programa que organiza as partidas de lol visando balancear  as equipes se baseando no nível e na função desejada.
+
+# Mockup
+
+https://www.figma.com/community/file/1294390415398198511
+
+## Arquitetura
 # Dominio
 dominio ou modulos ou entidades -> Player; Room, Team, Match
 
@@ -51,3 +59,4 @@ flutter_modular = https://pub.dev/packages/flutter_modular  Para rotas e invers�
 firebase_core & firebase_storage = https://pub.dev/packages/firebase_core & https://pub.dev/packages/firebase_storage Para armazenamento de dados.
 shared_preferences=  https://pub.dev/packages/shared_preferences  Para persistencia de dados local.
 mocktail = https://pub.dev/packages/mocktail Para mockagem dos dados de teste.
+
