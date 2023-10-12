@@ -1,0 +1,1 @@
+enum TeamSide { red, blue }
