@@ -5,3 +5,5 @@ Programa que organiza as partidas de lol visando balancear  as equipes se basean
 # Mockup
 
 https://www.figma.com/community/file/1294390415398198511
+
+## Arquitetura
