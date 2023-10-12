@@ -59,4 +59,4 @@ flutter_modular = https://pub.dev/packages/flutter_modular  Para rotas e inversÃ
 firebase_core & firebase_storage = https://pub.dev/packages/firebase_core & https://pub.dev/packages/firebase_storage Para armazenamento de dados.
 shared_preferences=  https://pub.dev/packages/shared_preferences  Para persistencia de dados local.
 mocktail = https://pub.dev/packages/mocktail Para mockagem dos dados de teste.
-
+flutterando_analysis = https://pub.dev/packages/flutterando_analysis Para lints mais rigorosos.
