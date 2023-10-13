@@ -31,12 +31,11 @@ class Player {
   @override
   bool operator ==(covariant Player other) {
     if (identical(this, other)) return true;
-
-    return other.id == id && other.name == name && other.role == role && other.isReady == isReady;
+    return other.id == id;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ role.hashCode ^ isReady.hashCode;
+    return id.hashCode;
   }
 }
