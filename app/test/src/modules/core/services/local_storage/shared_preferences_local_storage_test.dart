@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   group('Local Storage:', () {
-    final instance = SharedPreferencesLocalStorage.instance;
+    const instance = SharedPreferencesLocalStorage();
 
     SharedPreferences.setMockInitialValues({
       'string': 'string input saved on local storage',
@@ -36,7 +36,7 @@ void main() {
       await instance.setBool('setBool', value: false);
       expect(await instance.getBool('setBool'), false);
     });
-    
+
     test('set int', () async {
       await instance.setInt('setInt', value: 2);
       expect(await instance.getInt('setInt'), 2);
