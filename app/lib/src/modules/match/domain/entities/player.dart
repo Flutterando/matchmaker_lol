@@ -27,4 +27,16 @@ class Player {
       isReady: isReady ?? this.isReady,
     );
   }
+
+  @override
+  bool operator ==(covariant Player other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id && other.name == name && other.role == role && other.isReady == isReady;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ name.hashCode ^ role.hashCode ^ isReady.hashCode;
+  }
 }

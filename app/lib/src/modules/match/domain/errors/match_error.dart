@@ -12,3 +12,7 @@ class MinimalPlayersMatchError extends MatchError {
 class RoleMatchError extends MatchError {
   RoleMatchError() : super('Precisa-se diversificar mais os papeis');
 }
+
+class NotReadyMatchError extends MatchError {
+  NotReadyMatchError() : super('Todos os player precisam está prontos');
+}
