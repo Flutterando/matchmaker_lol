@@ -17,12 +17,9 @@ void main() {
     });
 
     test('deve adicionar 3 salas ...', () async {
-      await repository
-          .createRoom(Room(id: 'sala_01', players: {}, hostID: 'flutterando'));
-      await repository
-          .createRoom(Room(id: 'sala_02', players: {}, hostID: 'kali'));
-      await repository
-          .createRoom(Room(id: 'sala_03', players: {}, hostID: 'jacob'));
+      await repository.createRoom(Room(id: 'sala_01', players: {}, hostID: 'flutterando', teams: []));
+      await repository.createRoom(Room(id: 'sala_02', players: {}, hostID: 'kali', teams: []));
+      await repository.createRoom(Room(id: 'sala_03', players: {}, hostID: 'jacob', teams: []));
 
       final data = jsonDecode(db.dump());
 
@@ -30,12 +27,9 @@ void main() {
     });
 
     test('deve pegar uma sala ...', () async {
-      await repository
-          .createRoom(Room(id: 'sala_01', players: {}, hostID: 'flutterando'));
-      await repository
-          .createRoom(Room(id: 'sala_02', players: {}, hostID: 'kali'));
-      await repository
-          .createRoom(Room(id: 'sala_03', players: {}, hostID: 'jacob'));
+      await repository.createRoom(Room(id: 'sala_01', players: {}, hostID: 'flutterando', teams: []));
+      await repository.createRoom(Room(id: 'sala_02', players: {}, hostID: 'kali', teams: []));
+      await repository.createRoom(Room(id: 'sala_03', players: {}, hostID: 'jacob', teams: []));
 
       final result = await repository.getRoom('sala_02');
 
@@ -45,12 +39,9 @@ void main() {
     });
 
     test('deve atualizar uma sala ...', () async {
-      await repository
-          .createRoom(Room(id: 'sala_01', players: {}, hostID: 'flutterando'));
-      await repository
-          .createRoom(Room(id: 'sala_02', players: {}, hostID: 'kali'));
-      await repository
-          .createRoom(Room(id: 'sala_03', players: {}, hostID: 'jacob'));
+      await repository.createRoom(Room(id: 'sala_01', players: {}, hostID: 'flutterando', teams: []));
+      await repository.createRoom(Room(id: 'sala_02', players: {}, hostID: 'kali', teams: []));
+      await repository.createRoom(Room(id: 'sala_03', players: {}, hostID: 'jacob', teams: []));
 
       var result = await repository.getRoom('sala_03');
 

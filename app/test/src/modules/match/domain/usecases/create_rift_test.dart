@@ -11,6 +11,7 @@ void main() {
 
     final room = Room(
       id: 'id',
+      teams: [],
       players: {
         Player(id: 'id1', name: 'name1', isReady: true, role: Role.adc),
         Player(id: 'id2', name: 'name2', isReady: true, role: Role.adc),
@@ -54,6 +55,7 @@ void main() {
     final usecase = CreateRift();
 
     final room = Room(
+      teams: [],
       id: 'id',
       players: {
         Player(id: 'id', name: 'name'),
@@ -70,6 +72,7 @@ void main() {
     final usecase = CreateRift();
 
     final room = Room(
+      teams: [],
       id: 'id',
       players: {
         Player(id: 'id1', name: 'name', role: Role.sup),
@@ -95,6 +98,7 @@ void main() {
     final usecase = CreateRift();
 
     final room = Room(
+      teams: [],
       id: 'id',
       players: {
         Player(id: 'id1', name: 'name', isReady: true),
