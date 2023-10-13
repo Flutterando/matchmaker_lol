@@ -1,11 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'local_storage.dart';
 
 class SharedPreferencesLocalStorage implements LocalStorage {
-  const SharedPreferencesLocalStorage._();
-
-  static SharedPreferencesLocalStorage instance =
-      const SharedPreferencesLocalStorage._();
+  const SharedPreferencesLocalStorage();
 
   @override
   Future<String?> getString(String key) async {
@@ -42,7 +40,7 @@ class SharedPreferencesLocalStorage implements LocalStorage {
     final instance = await SharedPreferences.getInstance();
     await instance.setInt(key, value);
   }
-  
+
   @override
   Future<void> clean(String key) async {
     final instance = await SharedPreferences.getInstance();

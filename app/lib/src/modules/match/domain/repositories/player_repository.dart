@@ -4,5 +4,6 @@ import 'package:result_dart/result_dart.dart';
 
 abstract class PlayerRepository {
   AsyncResult<Unit, MatchError> enterRoom(Player player, String roomId);
+  AsyncResult<Unit, MatchError> update(Player player, String roomId);
   AsyncResult<Unit, MatchError> leaveRoom(Player player, String roomId);
 }
