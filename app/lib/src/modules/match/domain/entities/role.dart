@@ -1,1 +1,1 @@
-enum Role { adc, sup, jungle, mid, top, random }
+enum Role { top, jungle, mid, adc, sup, random }
