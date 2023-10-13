@@ -1,4 +1,3 @@
-import 'package:app/src/modules/match/domain/entities/rift.dart';
 import 'package:app/src/modules/match/domain/entities/role.dart';
 import 'package:app/src/modules/match/domain/entities/team.dart';
 import 'package:app/src/modules/match/domain/entities/team_side.dart';
@@ -9,7 +8,7 @@ import '../entities/room.dart';
 import '../errors/match_error.dart';
 
 class CreateRift {
-  Result<Rift, MatchError> call(Room room) {
+  Result<Room, MatchError> call(Room room) {
     if (room.players.length != 10) {
       return MinimalPlayersMatchError().toFailure();
     }
@@ -38,7 +37,7 @@ class CreateRift {
       players: bluePlayers.toSet(),
     );
 
-    return Rift(room: room, teams: [teamRed, teamBlue]).toSuccess();
+    return room.copyWith(teams: [teamRed, teamBlue]).toSuccess();
   }
 
   List<Player> fillTeam(List<Player> players, List<Player> randomPlayers) {
