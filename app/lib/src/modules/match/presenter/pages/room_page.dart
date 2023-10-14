@@ -1,6 +1,7 @@
 import 'package:app/src/modules/core/presenter/common_widgets/fmm_button.dart';
 import 'package:app/src/modules/match/domain/entities/role.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../domain/entities/player.dart';
@@ -78,13 +79,16 @@ class _RoomPageState extends State<RoomPage> {
                                     initialValue: state.player.name,
                                     key: Key(state.player.id),
                                     onChanged: (value) {
-                                      final player = state.player.copyWith(name: value);
+                                      final player =
+                                          state.player.copyWith(name: value);
                                       riftStore.updatePlayer(player);
                                     },
                                     decoration: InputDecoration(
                                       hintText: 'NickName',
-                                      labelStyle: const TextStyle(color: Colors.white),
-                                      hintStyle: const TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          const TextStyle(color: Colors.white),
+                                      hintStyle:
+                                          const TextStyle(color: Colors.white),
                                       fillColor: const Color(0XFF36343B),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -98,7 +102,11 @@ class _RoomPageState extends State<RoomPage> {
                                   flex: 4,
                                   child: Wrap(
                                     spacing: 5,
-                                    children: List.generate(Role.values.length, (index) {
+                                    runSpacing: 6,
+                                    runAlignment: WrapAlignment.center,
+                                    alignment: WrapAlignment.center,
+                                    children: List.generate(Role.values.length,
+                                        (index) {
                                       final role = Role.values[index];
                                       return ChoiceChip(
                                         label: Text(
@@ -110,9 +118,11 @@ class _RoomPageState extends State<RoomPage> {
                                         selectedColor: const Color(0XFF6750A4),
                                         selected: role == state.player.role,
                                         padding: const EdgeInsets.all(4),
-                                        backgroundColor: const Color(0XFF1D1B20),
+                                        backgroundColor:
+                                            const Color(0XFF1D1B20),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
                                           side: const BorderSide(
                                             color: Color(0XFFCAC4D0),
                                             width: 3,
@@ -120,7 +130,8 @@ class _RoomPageState extends State<RoomPage> {
                                         ),
                                         onSelected: (selected) {
                                           if (selected) {
-                                            final player = state.player.copyWith(role: role);
+                                            final player = state.player
+                                                .copyWith(role: role);
                                             riftStore.updatePlayer(player);
                                           }
                                         },
@@ -142,8 +153,12 @@ class _RoomPageState extends State<RoomPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       FMMButton(
-                                        backgroundColor: state.player.isReady ? Colors.green.shade800 : null,
-                                        label: state.player.isReady ? 'Confirmado' : 'Confirmar',
+                                        backgroundColor: state.player.isReady
+                                            ? Colors.green.shade800
+                                            : null,
+                                        label: state.player.isReady
+                                            ? 'Confirmado'
+                                            : 'Confirmar',
                                         onPressed: () {
                                           final player = state.player.copyWith(
                                             isReady: !state.player.isReady,
@@ -156,7 +171,8 @@ class _RoomPageState extends State<RoomPage> {
                                         label: 'Match!',
                                         onPressed: state is UpdatedRoomRiftState
                                             ? () {
-                                                Modular.to.pushNamed('../match');
+                                                Modular.to
+                                                    .pushNamed('../match');
                                               }
                                             : null,
                                       ),
@@ -164,11 +180,26 @@ class _RoomPageState extends State<RoomPage> {
                                         const SizedBox(width: 5),
                                         FMMButton(
                                           label: 'Re-Match',
-                                          onPressed: state is UpdatedRoomRiftState ? riftStore.rematch : null,
+                                          onPressed:
+                                              state is UpdatedRoomRiftState
+                                                  ? riftStore.rematch
+                                                  : null,
                                         ),
                                       ],
                                     ],
                                   ),
+                                ),
+                                const SizedBox(height: 15),
+                                FMMButton(
+                                  onPressed: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(
+                                        text:
+                                            'https://flutterandomatchmaker.web.app/match/room/${state.room.id}',
+                                      ),
+                                    );
+                                  },
+                                  label: 'Copiar link',
                                 ),
                               ],
                             ),
