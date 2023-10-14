@@ -4,7 +4,7 @@ Programa que organiza as partidas de lol visando balancear  as equipes se basean
 
 # Mockup
 
-https://www.figma.com/community/file/1294390415398198511
+https://www.figma.com/file/djieQL73SV06XRvDau6Urw/Matchmaker-LOL-(Community)?type=design&node-id=54495-526&mode=design&t=ixMakmK8dQXEvBPY-0
 
 ## Arquitetura
 # Dominio

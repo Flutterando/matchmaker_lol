@@ -1,3 +1,4 @@
+import 'package:app/src/modules/core/presenter/common_widgets/fmm_button.dart';
 import 'package:app/src/modules/match/domain/state/rift_state.dart';
 import 'package:app/src/modules/match/domain/stores/rift_store.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    riftStore.addListener(_navigate);
+    riftStore.removeListener(_navigate);
     super.dispose();
   }
 
@@ -51,61 +52,68 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        alignment: AlignmentDirectional.center,
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Flutterando',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+            const Flexible(
+              flex: 8,
+              child: Text(
+                'Flutterando\nMatchMaker',
+                style: TextStyle(color: Colors.white, fontSize: 60),
+              ),
             ),
-            const Text(
-              'MatchMaker',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+            const Spacer(flex: 2),
+            Flexible(
+              flex: 3,
+              child: FMMButton(
+                label: 'Criar',
+                onPressed: isLoading ? null : store.createRoom,
+              ),
             ),
-            ElevatedButton(
-              onPressed: isLoading ? null : store.createRoom,
-              child: const Text('Criar'),
-            ),
-            ElevatedButton(
-              onPressed: isLoading
-                  ? null
-                  : () {
-                      showAdaptiveDialog(
-                        context: context,
-                        builder: (context) {
-                          var roomId = '';
-                          return AlertDialog.adaptive(
-                            actions: [
-                              TextField(
-                                onChanged: (value) => roomId = value,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      if (roomId.isEmpty) {
-                                        return;
-                                      }
-                                      Navigator.pop(context);
-                                      Modular.to.navigate('./room/$roomId');
-                                    },
-                                    child: const Text('Entrar'),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const Text('Cancelar'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-              child: const Text('Entrar'),
+            const SizedBox(height: 10),
+            Flexible(
+              flex: 3,
+              child: FMMButton(
+                label: 'Entrar',
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        showAdaptiveDialog(
+                          context: context,
+                          builder: (context) {
+                            var roomId = '';
+                            return AlertDialog.adaptive(
+                              actions: [
+                                TextField(
+                                  onChanged: (value) => roomId = value,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (roomId.isEmpty) {
+                                          return;
+                                        }
+                                        Navigator.pop(context);
+                                        Modular.to.navigate('./room/$roomId');
+                                      },
+                                      child: const Text('Entrar'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('Cancelar'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+              ),
             ),
           ],
         ),

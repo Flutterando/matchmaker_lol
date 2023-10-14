@@ -1,3 +1,4 @@
+import 'package:app/src/modules/core/presenter/common_widgets/fmm_button.dart';
 import 'package:app/src/modules/match/domain/entities/role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -45,194 +46,205 @@ class _RoomPageState extends State<RoomPage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Flexible(child: SizedBox()),
-          Column(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                child: Column(
-                  children: [
-                    Text(
-                      'Flutterando',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 64,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      'Matchmaker',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 64,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+              const Flexible(
+                flex: 3,
+                child: Text(
+                  'Flutterando\nMatchMaker',
+                  style: TextStyle(color: Colors.white, fontSize: 42),
                 ),
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(30),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: const Color(0XFF1D1B20),
-                    ),
-                    width: 518,
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: TextFormField(
-                              initialValue: state.player.name,
-                              key: Key(state.player.id),
-                              onChanged: (value) {
-                                final player = state.player.copyWith(name: value);
-                                riftStore.updatePlayer(player);
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'NickName',
-                                labelStyle: const TextStyle(color: Colors.white),
-                                hintStyle: const TextStyle(color: Colors.white),
-                                fillColor: const Color(0XFF36343B),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                filled: true,
-                              ),
-                            ),
+              const Spacer(),
+              Flexible(
+                flex: 6,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 1080),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        // width: 518,
+                        child: Container(
+                          padding: const EdgeInsets.all(30),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: const Color(0XFF1D1B20),
                           ),
-                          const SizedBox(
-                            height: 55,
-                          ),
-                          Wrap(
-                            spacing: 5,
-                            children: List.generate(Role.values.length, (index) {
-                              final role = Role.values[index];
-                              return ChoiceChip(
-                                label: Text(
-                                  role.name.toUpperCase(),
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                selectedColor: const Color(0XFF6750A4),
-                                selected: role == state.player.role,
-                                padding: const EdgeInsets.all(12),
-                                backgroundColor: const Color(0XFF1D1B20),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  side: const BorderSide(
-                                    color: Color(0XFFCAC4D0),
-                                    width: 3,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Flexible(
+                                  flex: 4,
+                                  child: TextFormField(
+                                    initialValue: state.player.name,
+                                    key: Key(state.player.id),
+                                    onChanged: (value) {
+                                      final player =
+                                          state.player.copyWith(name: value);
+                                      riftStore.updatePlayer(player);
+                                    },
+                                    decoration: InputDecoration(
+                                      hintText: 'NickName',
+                                      labelStyle:
+                                          const TextStyle(color: Colors.white),
+                                      hintStyle:
+                                          const TextStyle(color: Colors.white),
+                                      fillColor: const Color(0XFF36343B),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      filled: true,
+                                    ),
                                   ),
                                 ),
-                                onSelected: (selected) {
-                                  if (selected) {
-                                    final player = state.player.copyWith(role: role);
-                                    riftStore.updatePlayer(player);
-                                  }
-                                },
-                              );
-                            }),
-                          ),
-                          if (state is ErrorRiftState)
-                            Text(
-                              state.error?.message ?? '',
-                              style: const TextStyle(color: Colors.red),
-                            ),
-                          Row(
-                            children: [
-                              FilledButton(
-                                onPressed: () {
-                                  final player = state.player.copyWith(isReady: !state.player.isReady);
-                                  riftStore.updatePlayer(player);
-                                },
-                                style: const ButtonStyle(
-                                  visualDensity: VisualDensity.standard,
-                                ),
-                                child: Text(
-                                  state.player.isReady ? 'Cancelar' : 'Confirmar',
-                                ),
-                              ),
-                              FilledButton(
-                                onPressed: state is UpdatedRoomRiftState
-                                    ? () {
-                                        Modular.to.pushNamed('../match');
-                                      }
-                                    : null,
-                                style: const ButtonStyle(
-                                  visualDensity: VisualDensity.standard,
-                                ),
-                                child: const Text('Match!'),
-                              ),
-                              if (isOwner)
-                                FilledButton(
-                                  onPressed: state is UpdatedRoomRiftState ? riftStore.rematch : null,
-                                  style: const ButtonStyle(
-                                    visualDensity: VisualDensity.standard,
+                                const Spacer(),
+                                Flexible(
+                                  flex: 4,
+                                  child: Wrap(
+                                    spacing: 5,
+                                    children: List.generate(Role.values.length,
+                                        (index) {
+                                      final role = Role.values[index];
+                                      return ChoiceChip(
+                                        label: Text(
+                                          role.name.toUpperCase(),
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                        selectedColor: const Color(0XFF6750A4),
+                                        selected: role == state.player.role,
+                                        padding: const EdgeInsets.all(4),
+                                        backgroundColor:
+                                            const Color(0XFF1D1B20),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          side: const BorderSide(
+                                            color: Color(0XFFCAC4D0),
+                                            width: 3,
+                                          ),
+                                        ),
+                                        onSelected: (selected) {
+                                          if (selected) {
+                                            final player = state.player
+                                                .copyWith(role: role);
+                                            riftStore.updatePlayer(player);
+                                          }
+                                        },
+                                      );
+                                    }),
                                   ),
-                                  child: const Text('Re-Match'),
                                 ),
-                            ],
+                                const Spacer(),
+                                if (state is ErrorRiftState) ...[
+                                  Text(
+                                    state.error?.message ?? '',
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                                Flexible(
+                                  flex: 4,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FMMButton(
+                                        backgroundColor: state.player.isReady
+                                            ? Colors.green.shade800
+                                            : null,
+                                        label: state.player.isReady
+                                            ? 'Confirmado'
+                                            : 'Confirmar',
+                                        onPressed: () {
+                                          final player = state.player.copyWith(
+                                              isReady: !state.player.isReady);
+                                          riftStore.updatePlayer(player);
+                                        },
+                                      ),
+                                      const SizedBox(width: 5),
+                                      FMMButton(
+                                        label: 'Match!',
+                                        onPressed: state is UpdatedRoomRiftState
+                                            ? () {
+                                                Modular.to.pushNamed('./match');
+                                              }
+                                            : null,
+                                      ),
+                                      if (isOwner) ...[
+                                        const SizedBox(width: 5),
+                                        FMMButton(
+                                          label: 'Re-Match',
+                                          onPressed:
+                                              state is UpdatedRoomRiftState
+                                                  ? riftStore.rematch
+                                                  : null,
+                                        ),
+                                      ]
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                      const VerticalDivider(
+                        color: Colors.white,
+                      ),
+                      Flexible(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: const Color(0XFF1D1B20),
+                          ),
+                          padding: const EdgeInsets.all(48),
+                          child: ListView.separated(
+                            itemCount: players.length,
+                            itemBuilder: (context, index) {
+                              final player = players[index];
+                              return ListTile(
+                                title: Text(player.name),
+                                subtitle: Text(player.role.name.toLowerCase()),
+                                trailing:
+                                    !isOwner && player.id == state.room.hostID
+                                        ? null
+                                        : IconButton(
+                                            onPressed: () {
+                                              riftStore.kickPlayer(player);
+                                            },
+                                            icon: const Icon(
+                                                Icons.delete_forever_outlined),
+                                          ),
+                                leading: player.isReady
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
+                                        Icons.access_alarm_sharp,
+                                        color: Colors.red,
+                                      ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const Divider();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.all(22),
-                    width: 2,
-                    height: 600,
-                  ),
-                  Container(
-                    width: 480,
-                    height: 500,
-                    color: const Color(0XFF1D1B20),
-                    padding: const EdgeInsets.all(48),
-                    child: ListView.separated(
-                      itemCount: players.length,
-                      itemBuilder: (context, index) {
-                        final player = players[index];
-                        return ListTile(
-                          title: Text(player.name),
-                          subtitle: Text(player.role.name.toLowerCase()),
-                          trailing: !isOwner && player.id == state.room.hostID
-                              ? null
-                              : IconButton(
-                                  onPressed: () {
-                                    riftStore.kickPlayer(player);
-                                  },
-                                  icon: const Icon(Icons.delete_forever_outlined),
-                                ),
-                          leading: player.isReady
-                              ? const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )
-                              : const Icon(
-                                  Icons.access_alarm_sharp,
-                                  color: Colors.red,
-                                ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider();
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
-          const Flexible(child: SizedBox()),
-        ],
+        ),
       ),
     );
   }
