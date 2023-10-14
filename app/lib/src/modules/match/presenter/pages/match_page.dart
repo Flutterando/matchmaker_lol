@@ -1,5 +1,9 @@
-import 'package:app/src/modules/match/presenter/pages/room_page.dart';
+import 'package:app/src/modules/match/domain/entities/team_side.dart';
+import 'package:app/src/modules/match/domain/stores/rift_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../components/confirmed_player.dart';
 
 class MatchPage extends StatefulWidget {
   const MatchPage({super.key});
@@ -11,6 +15,21 @@ class MatchPage extends StatefulWidget {
 class _MatchPageState extends State<MatchPage> {
   @override
   Widget build(BuildContext context) {
+    final store = context.watch<RiftStore>();
+    final state = store.value;
+    final redTeam = state
+        .room //
+        .teams
+        .firstWhere((e) => e.side == TeamSide.red)
+        .players
+        .toList();
+    final blueTeam = state
+        .room //
+        .teams
+        .firstWhere((e) => e.side == TeamSide.blue)
+        .players
+        .toList();
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Row(
@@ -63,15 +82,14 @@ class _MatchPageState extends State<MatchPage> {
                         width: 480,
                         color: const Color(0XFF1D1B20),
                         padding: const EdgeInsets.all(48),
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: const [
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                          ],
+                        child: ListView.builder(
+                          itemCount: blueTeam.length,
+                          itemBuilder: (context, index) {
+                            final player = blueTeam[index];
+                            return ConfirmedPlayer(
+                              player: player,
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -98,19 +116,18 @@ class _MatchPageState extends State<MatchPage> {
                         width: 480,
                         color: const Color(0XFF1D1B20),
                         padding: const EdgeInsets.all(48),
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: const [
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                            ConfirmedPlayer(),
-                          ],
+                        child: ListView.builder(
+                          itemCount: blueTeam.length,
+                          itemBuilder: (context, index) {
+                            final player = redTeam[index];
+                            return ConfirmedPlayer(
+                              player: player,
+                            );
+                          },
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ],

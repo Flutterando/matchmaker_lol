@@ -33,10 +33,10 @@ class MatchModule extends Module {
 
   @override
   void routes(RouteManager r) {
-    r.child('/room/:id',
-        child: (_) => RoomPage(
-              roomId: r.args.params['id'],
-            ));
+    r.child(
+      '/room/:id',
+      child: (_) => RoomPage(roomId: r.args.params['id']),
+    );
     r.child('/match', child: (_) => const MatchPage());
     r.child('/home', child: (_) => const HomePage());
   }

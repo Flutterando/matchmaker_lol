@@ -94,14 +94,12 @@ class _RoomPageState extends State<RoomPage> {
                               initialValue: state.player.name,
                               key: Key(state.player.id),
                               onChanged: (value) {
-                                final player =
-                                    state.player.copyWith(name: value);
+                                final player = state.player.copyWith(name: value);
                                 riftStore.updatePlayer(player);
                               },
                               decoration: InputDecoration(
                                 hintText: 'NickName',
-                                labelStyle:
-                                    const TextStyle(color: Colors.white),
+                                labelStyle: const TextStyle(color: Colors.white),
                                 hintStyle: const TextStyle(color: Colors.white),
                                 fillColor: const Color(0XFF36343B),
                                 border: OutlineInputBorder(
@@ -116,8 +114,7 @@ class _RoomPageState extends State<RoomPage> {
                           ),
                           Wrap(
                             spacing: 5,
-                            children:
-                                List.generate(Role.values.length, (index) {
+                            children: List.generate(Role.values.length, (index) {
                               final role = Role.values[index];
                               return ChoiceChip(
                                 label: Text(
@@ -137,8 +134,7 @@ class _RoomPageState extends State<RoomPage> {
                                 ),
                                 onSelected: (selected) {
                                   if (selected) {
-                                    final player =
-                                        state.player.copyWith(role: role);
+                                    final player = state.player.copyWith(role: role);
                                     riftStore.updatePlayer(player);
                                   }
                                 },
@@ -154,23 +150,20 @@ class _RoomPageState extends State<RoomPage> {
                             children: [
                               FilledButton(
                                 onPressed: () {
-                                  final player = state.player
-                                      .copyWith(isReady: !state.player.isReady);
+                                  final player = state.player.copyWith(isReady: !state.player.isReady);
                                   riftStore.updatePlayer(player);
                                 },
                                 style: const ButtonStyle(
                                   visualDensity: VisualDensity.standard,
                                 ),
                                 child: Text(
-                                  state.player.isReady
-                                      ? 'Confirmado'
-                                      : 'Não confirmado',
+                                  state.player.isReady ? 'Cancelar' : 'Confirmar',
                                 ),
                               ),
                               FilledButton(
                                 onPressed: state is UpdatedRoomRiftState
                                     ? () {
-                                        Modular.to.pushNamed('./match');
+                                        Modular.to.pushNamed('../match');
                                       }
                                     : null,
                                 style: const ButtonStyle(
@@ -180,9 +173,7 @@ class _RoomPageState extends State<RoomPage> {
                               ),
                               if (isOwner)
                                 FilledButton(
-                                  onPressed: state is UpdatedRoomRiftState
-                                      ? riftStore.rematch
-                                      : null,
+                                  onPressed: state is UpdatedRoomRiftState ? riftStore.rematch : null,
                                   style: const ButtonStyle(
                                     visualDensity: VisualDensity.standard,
                                   ),
@@ -218,8 +209,7 @@ class _RoomPageState extends State<RoomPage> {
                                   onPressed: () {
                                     riftStore.kickPlayer(player);
                                   },
-                                  icon:
-                                      const Icon(Icons.delete_forever_outlined),
+                                  icon: const Icon(Icons.delete_forever_outlined),
                                 ),
                           leading: player.isReady
                               ? const Icon(
@@ -242,49 +232,6 @@ class _RoomPageState extends State<RoomPage> {
             ],
           ),
           const Flexible(child: SizedBox()),
-        ],
-      ),
-    );
-  }
-}
-
-class ConfirmedPlayer extends StatelessWidget {
-  const ConfirmedPlayer({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      width: 360,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: const Color(0XFF36343B),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Okamael',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                'ADC',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-          Image.network(
-            'https://placehold.co/400.png',
-            height: 80,
-          ),
         ],
       ),
     );
