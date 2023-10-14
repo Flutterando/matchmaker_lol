@@ -15,6 +15,10 @@ class Room {
     required this.teams,
   });
 
+  factory Room.empty() {
+    return Room(id: '', players: {}, hostID: '', teams: []);
+  }
+
   Room copyWith({
     String? id,
     Set<Player>? players,

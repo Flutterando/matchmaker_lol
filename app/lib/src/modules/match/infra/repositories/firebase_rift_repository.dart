@@ -37,16 +37,16 @@ class FirebaseRiftRepository implements RiftRepository {
   }
 
   @override
-  AsyncResult<Unit, MatchError> updateRoom(Room room) async {
+  AsyncResult<Room, MatchError> updateRoom(Room room) async {
     await db.collection('rooms').doc(room.id).update(RoomAdapter.toMap(room));
 
-    return Success.unit();
+    return room.toSuccess();
   }
 
   @override
-  AsyncResult<Unit, MatchError> createRoom(Room room) async {
+  AsyncResult<Room, MatchError> createRoom(Room room) async {
     await db.collection('rooms').doc(room.id).set(RoomAdapter.toMap(room));
 
-    return Success.unit();
+    return room.toSuccess();
   }
 }

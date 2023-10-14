@@ -9,6 +9,8 @@ import 'package:app/src/modules/match/infra/adapters/player_adapter.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../domain/entities/room.dart';
+
 const playerKey = 'PLAYER_KEY';
 
 class FirebasePlayerRepository implements PlayerRepository {
@@ -21,7 +23,7 @@ class FirebasePlayerRepository implements PlayerRepository {
   final RiftRepository riftRepository;
 
   @override
-  AsyncResult<Unit, MatchError> enterRoom(Player player, String roomId) {
+  AsyncResult<Room, MatchError> enterRoom(Player player, String roomId) {
     return riftRepository //
         .getRoom(roomId)
         .map((room) => room.copyWith(players: {...room.players, player}))
@@ -46,7 +48,7 @@ class FirebasePlayerRepository implements PlayerRepository {
   }
 
   @override
-  AsyncResult<Unit, MatchError> leaveRoom(Player player, String roomId) async {
+  AsyncResult<Room, MatchError> leaveRoom(Player player, String roomId) async {
     return riftRepository //
         .getRoom(roomId)
         .map((room) => room.copyWith(players: room.players..remove(player)))
@@ -54,7 +56,7 @@ class FirebasePlayerRepository implements PlayerRepository {
   }
 
   @override
-  AsyncResult<Unit, MatchError> update(Player player, String roomId) async {
+  AsyncResult<Room, MatchError> update(Player player, String roomId) async {
     await saveLocalPlayer(player);
 
     return riftRepository //
