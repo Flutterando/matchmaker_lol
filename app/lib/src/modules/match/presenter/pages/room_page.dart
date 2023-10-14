@@ -30,13 +30,6 @@ class _RoomPageState extends State<RoomPage> {
     });
   }
 
-  void _navigate() {
-    final state = riftStore.value;
-    if (state is UpdatedRoomRiftState) {
-      Modular.to.navigate('./match');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final store = context.watch<RiftStore>();
@@ -185,7 +178,7 @@ class _RoomPageState extends State<RoomPage> {
                                                   ? riftStore.rematch
                                                   : null,
                                         ),
-                                      ]
+                                      ],
                                     ],
                                   ),
                                 ),
@@ -212,7 +205,7 @@ class _RoomPageState extends State<RoomPage> {
                                 title: Text(player.name),
                                 subtitle: Text(player.role.name.toLowerCase()),
                                 trailing:
-                                    !isOwner && player.id == state.room.hostID
+                                    !isOwner || player.id == state.room.hostID
                                         ? null
                                         : IconButton(
                                             onPressed: () {
