@@ -12,53 +12,108 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        alignment: AlignmentDirectional.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Flutterando',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            const Text(
-              'MatchMaker',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Criar'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                showAdaptiveDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog.adaptive(
-                      actions: [
-                        const TextField(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: const Text('Entrar'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('Cancelar'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Entrar'),
-            ),
-          ],
-        ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Column(
+                children: [
+                  Text(
+                    'Flutterando',
+                    style: TextStyle(color: Colors.white, fontSize: 64),
+                  ),
+                  Text(
+                    'MatchMaker',
+                    style: TextStyle(color: Colors.white, fontSize: 64),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  FilledButton(
+                    onPressed: () {},
+                    style: const ButtonStyle(
+                      visualDensity: VisualDensity.standard,
+                    ),
+                    child: const Text('Criar'),
+                  ),
+                  FilledButton(
+                    style: const ButtonStyle(
+                      visualDensity: VisualDensity.standard,
+                    ),
+                    onPressed: () {
+                      showAdaptiveDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog.adaptive(
+                            backgroundColor: const Color(0XFF2B2930),
+                            actions: [
+                              const Center(
+                                child: Text(
+                                  'Digite o código da sala',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              TextField(
+                                decoration: InputDecoration(
+                                  labelStyle:
+                                      const TextStyle(color: Colors.white),
+                                  hintStyle:
+                                      const TextStyle(color: Colors.white),
+                                  fillColor: const Color(0XFF36343B),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    style: const ButtonStyle(
+                                      visualDensity: VisualDensity.standard,
+                                    ),
+                                    child: const Text(
+                                      'Cancelar',
+                                      style: TextStyle(
+                                        color: Color(0XFFD0BCFF),
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {},
+                                    style: const ButtonStyle(
+                                      visualDensity: VisualDensity.standard,
+                                    ),
+                                    child: const Text(
+                                      'Entrar',
+                                      style: TextStyle(
+                                        color: Color(0XFFD0BCFF),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text('Entrar'),
+                  ),
+                ],
+              ),
+              const Spacer(),
+            ],
+          ),
+        ],
       ),
     );
   }

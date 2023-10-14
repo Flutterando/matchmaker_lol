@@ -58,7 +58,7 @@ class _RoomPageState extends State<RoomPage> {
                     child: Center(
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             child: TextField(
                               decoration: InputDecoration(
                                 hintText: 'NickName',
@@ -128,40 +128,12 @@ class _RoomPageState extends State<RoomPage> {
                     padding: const EdgeInsets.all(48),
                     child: ListView(
                       shrinkWrap: true,
-                      children: [
-                        Container(
-                          height: 80,
-                          width: 360,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: const Color(0XFF36343B),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Okamael',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    'ADC',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                              Image.network(
-                                'https://placehold.co/400.png',
-                                height: 80,
-                              ),
-                            ],
-                          ),
-                        ),
+                      children: const [
+                        ConfirmedPlayer(),
+                        ConfirmedPlayer(),
+                        ConfirmedPlayer(),
+                        ConfirmedPlayer(),
+                        ConfirmedPlayer(),
                       ],
                     ),
                   ),
@@ -170,6 +142,49 @@ class _RoomPageState extends State<RoomPage> {
             ],
           ),
           const Flexible(child: SizedBox()),
+        ],
+      ),
+    );
+  }
+}
+
+class ConfirmedPlayer extends StatelessWidget {
+  const ConfirmedPlayer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      width: 360,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: const Color(0XFF36343B),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Okamael',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'ADC',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          Image.network(
+            'https://placehold.co/400.png',
+            height: 80,
+          ),
         ],
       ),
     );

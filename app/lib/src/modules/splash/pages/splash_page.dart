@@ -20,11 +20,11 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               Text(
                 'Flutterando',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 64),
               ),
               Text(
                 'MatchMaker',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 64),
               ),
             ],
           ),
