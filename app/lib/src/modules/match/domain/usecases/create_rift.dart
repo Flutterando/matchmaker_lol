@@ -10,15 +10,15 @@ import '../errors/match_error.dart';
 class CreateRift {
   Result<Room, MatchError> call(Room room) {
     if (room.players.length != 10) {
-      return MinimalPlayersMatchError().toFailure();
+      return MinimalPlayersMatchError(room: room).toFailure();
     }
 
     if (!_validadeRoles(room.players)) {
-      return RoleMatchError().toFailure();
+      return RoleMatchError(room: room).toFailure();
     }
 
     if (room.players.any((p) => !p.isReady)) {
-      return NotReadyMatchError().toFailure();
+      return NotReadyMatchError(room: room).toFailure();
     }
 
     final players = room.players.toList()..shuffle();
