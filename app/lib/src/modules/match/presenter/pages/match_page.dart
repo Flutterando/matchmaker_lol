@@ -119,7 +119,8 @@ class _MatchPageState extends State<MatchPage> {
                                 final showYou = player.id == state.player.id;
                                 return ListTile(
                                   title: Text(player.name),
-                                  subtitle: Text(player.role.name.toUpperCase()),
+                                  subtitle:
+                                      Text(player.role.name.toUpperCase()),
                                   trailing: showYou
                                       ? const Icon(
                                           Icons.person,
@@ -165,7 +166,8 @@ class _MatchPageState extends State<MatchPage> {
                                 final showYou = player.id == state.player.id;
                                 return ListTile(
                                   title: Text(player.name),
-                                  subtitle: Text(player.role.name.toUpperCase()),
+                                  subtitle:
+                                      Text(player.role.name.toUpperCase()),
                                   trailing: showYou
                                       ? const Icon(
                                           Icons.person,

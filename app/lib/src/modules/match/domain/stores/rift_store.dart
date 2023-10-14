@@ -36,7 +36,8 @@ class RiftStore extends ValueNotifier<RiftState> {
     await _subscription?.cancel();
     final roomStream = riftRepository.getRoomSnapshot(roomId);
     _subscription = roomStream.listen((room) {
-      final newValue = createRiftUsecase(room).fold(value.setRoom, value.setError);
+      final newValue =
+          createRiftUsecase(room).fold(value.setRoom, value.setError);
       value = newValue;
     });
   }

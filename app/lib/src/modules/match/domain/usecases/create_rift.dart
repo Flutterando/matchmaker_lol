@@ -10,11 +10,17 @@ import '../errors/match_error.dart';
 class CreateRift {
   Result<Room, MatchError> call(Room room) {
     if (room.players.length < 10) {
-      return MinimalPlayersMatchError('Faltam ${10 - room.players.length} players.', room: room).toFailure();
+      return MinimalPlayersMatchError(
+        'Faltam ${10 - room.players.length} players.',
+        room: room,
+      ).toFailure();
     }
 
     if (room.players.length > 10) {
-      return MinimalPlayersMatchError('Remova ${room.players.length - 10} players.', room: room).toFailure();
+      return MinimalPlayersMatchError(
+        'Remova ${room.players.length - 10} players.',
+        room: room,
+      ).toFailure();
     }
 
     if (!_validadeRoles(room.players)) {
