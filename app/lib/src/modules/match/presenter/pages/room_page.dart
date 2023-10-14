@@ -104,9 +104,6 @@ class _RoomPageState extends State<RoomPage> {
                                   ),
                                 ),
                                 const Spacer(),
-                                // const SizedBox(
-                                //   height: 55,
-                                // ),
                                 Flexible(
                                   flex: 4,
                                   child: Wrap(
