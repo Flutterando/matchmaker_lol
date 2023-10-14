@@ -9,8 +9,12 @@ import '../errors/match_error.dart';
 
 class CreateRift {
   Result<Room, MatchError> call(Room room) {
-    if (room.players.length != 10) {
-      return MinimalPlayersMatchError(room: room).toFailure();
+    if (room.players.length < 10) {
+      return MinimalPlayersMatchError('Faltam ${10 - room.players.length} players.', room: room).toFailure();
+    }
+
+    if (room.players.length > 10) {
+      return MinimalPlayersMatchError('Remova ${room.players.length - 10} players.', room: room).toFailure();
     }
 
     if (!_validadeRoles(room.players)) {
@@ -33,7 +37,7 @@ class CreateRift {
     );
 
     final teamBlue = Team(
-      side: TeamSide.red,
+      side: TeamSide.blue,
       players: bluePlayers.toSet(),
     );
 

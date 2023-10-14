@@ -41,6 +41,8 @@ dependencies:
   uuid: ^3.0.7
   shared_preferences: ^2.2.2
   cloud_firestore: ^4.9.3
+  flutter_web_plugins:
+    sdk: flutter
   
 dev_dependencies:
   flutterando_analysis: ^0.0.2

@@ -68,7 +68,9 @@ void main() {
     expect(result.exceptionOrNull(), isA<MinimalPlayersMatchError>());
   });
 
-  test('Deve retornar um erro se os players tiverem mais de 2 roles iguais com excessão da Role.ramdom', () {
+  test(
+      'Deve retornar um erro se os players tiverem '
+      'mais de 2 roles iguais com excessão da Role.ramdom', () {
     final usecase = CreateRift();
 
     final room = Room(

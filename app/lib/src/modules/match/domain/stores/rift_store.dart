@@ -31,12 +31,13 @@ class RiftStore extends ValueNotifier<RiftState> {
       return;
     }
 
-    value = value.setRoom(result.getOrThrow());
+    value = value.createRoom(result.getOrThrow());
 
     await _subscription?.cancel();
     final roomStream = riftRepository.getRoomSnapshot(roomId);
     _subscription = roomStream.listen((room) {
-      value = createRiftUsecase(room).fold(value.setRoom, value.setError);
+      final newValue = createRiftUsecase(room).fold(value.setRoom, value.setError);
+      value = newValue;
     });
   }
 
@@ -108,7 +109,7 @@ class RiftStore extends ValueNotifier<RiftState> {
     super.dispose();
   }
 
-  void kickPlayer(Player player) {
-    playerRepository.leaveRoom(player, value.room.id);
+  Future<void> kickPlayer(Player player) async {
+    await playerRepository.leaveRoom(player, value.room.id);
   }
 }

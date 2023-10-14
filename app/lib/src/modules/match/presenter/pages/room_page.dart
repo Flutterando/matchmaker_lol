@@ -3,6 +3,7 @@ import 'package:app/src/modules/match/domain/entities/role.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../domain/entities/player.dart';
 import '../../domain/state/rift_state.dart';
 import '../../domain/stores/rift_store.dart';
 
@@ -24,17 +25,10 @@ class _RoomPageState extends State<RoomPage> {
       await riftStore.getPlayer();
       await riftStore.getRoom(widget.roomId);
       if (riftStore.value is ErrorRiftState) {
-        Modular.to.navigate('./home');
+        Modular.to.navigate('../home');
       }
       await riftStore.enterRoom();
     });
-  }
-
-  void _navigate() {
-    final state = riftStore.value;
-    if (state is UpdatedRoomRiftState) {
-      Modular.to.navigate('./match');
-    }
   }
 
   @override
@@ -63,9 +57,8 @@ class _RoomPageState extends State<RoomPage> {
               Flexible(
                 flex: 6,
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 1080),
+                  constraints: const BoxConstraints(maxWidth: 1080),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
@@ -85,16 +78,13 @@ class _RoomPageState extends State<RoomPage> {
                                     initialValue: state.player.name,
                                     key: Key(state.player.id),
                                     onChanged: (value) {
-                                      final player =
-                                          state.player.copyWith(name: value);
+                                      final player = state.player.copyWith(name: value);
                                       riftStore.updatePlayer(player);
                                     },
                                     decoration: InputDecoration(
                                       hintText: 'NickName',
-                                      labelStyle:
-                                          const TextStyle(color: Colors.white),
-                                      hintStyle:
-                                          const TextStyle(color: Colors.white),
+                                      labelStyle: const TextStyle(color: Colors.white),
+                                      hintStyle: const TextStyle(color: Colors.white),
                                       fillColor: const Color(0XFF36343B),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -108,23 +98,21 @@ class _RoomPageState extends State<RoomPage> {
                                   flex: 4,
                                   child: Wrap(
                                     spacing: 5,
-                                    children: List.generate(Role.values.length,
-                                        (index) {
+                                    children: List.generate(Role.values.length, (index) {
                                       final role = Role.values[index];
                                       return ChoiceChip(
                                         label: Text(
                                           role.name.toUpperCase(),
                                           style: const TextStyle(
-                                              color: Colors.white),
+                                            color: Colors.white,
+                                          ),
                                         ),
                                         selectedColor: const Color(0XFF6750A4),
                                         selected: role == state.player.role,
                                         padding: const EdgeInsets.all(4),
-                                        backgroundColor:
-                                            const Color(0XFF1D1B20),
+                                        backgroundColor: const Color(0XFF1D1B20),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
+                                          borderRadius: BorderRadius.circular(4),
                                           side: const BorderSide(
                                             color: Color(0XFFCAC4D0),
                                             width: 3,
@@ -132,8 +120,7 @@ class _RoomPageState extends State<RoomPage> {
                                         ),
                                         onSelected: (selected) {
                                           if (selected) {
-                                            final player = state.player
-                                                .copyWith(role: role);
+                                            final player = state.player.copyWith(role: role);
                                             riftStore.updatePlayer(player);
                                           }
                                         },
@@ -142,7 +129,7 @@ class _RoomPageState extends State<RoomPage> {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (state is ErrorRiftState) ...[
+                                if (state.error != null) ...[
                                   Text(
                                     state.error?.message ?? '',
                                     style: const TextStyle(color: Colors.red),
@@ -155,15 +142,12 @@ class _RoomPageState extends State<RoomPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       FMMButton(
-                                        backgroundColor: state.player.isReady
-                                            ? Colors.green.shade800
-                                            : null,
-                                        label: state.player.isReady
-                                            ? 'Confirmado'
-                                            : 'Confirmar',
+                                        backgroundColor: state.player.isReady ? Colors.green.shade800 : null,
+                                        label: state.player.isReady ? 'Confirmado' : 'Confirmar',
                                         onPressed: () {
                                           final player = state.player.copyWith(
-                                              isReady: !state.player.isReady);
+                                            isReady: !state.player.isReady,
+                                          );
                                           riftStore.updatePlayer(player);
                                         },
                                       ),
@@ -172,7 +156,7 @@ class _RoomPageState extends State<RoomPage> {
                                         label: 'Match!',
                                         onPressed: state is UpdatedRoomRiftState
                                             ? () {
-                                                Modular.to.pushNamed('./match');
+                                                Modular.to.pushNamed('../match');
                                               }
                                             : null,
                                       ),
@@ -180,12 +164,9 @@ class _RoomPageState extends State<RoomPage> {
                                         const SizedBox(width: 5),
                                         FMMButton(
                                           label: 'Re-Match',
-                                          onPressed:
-                                              state is UpdatedRoomRiftState
-                                                  ? riftStore.rematch
-                                                  : null,
+                                          onPressed: state is UpdatedRoomRiftState ? riftStore.rematch : null,
                                         ),
-                                      ]
+                                      ],
                                     ],
                                   ),
                                 ),
@@ -211,16 +192,7 @@ class _RoomPageState extends State<RoomPage> {
                               return ListTile(
                                 title: Text(player.name),
                                 subtitle: Text(player.role.name.toLowerCase()),
-                                trailing:
-                                    !isOwner && player.id == state.room.hostID
-                                        ? null
-                                        : IconButton(
-                                            onPressed: () {
-                                              riftStore.kickPlayer(player);
-                                            },
-                                            icon: const Icon(
-                                                Icons.delete_forever_outlined),
-                                          ),
+                                trailing: _removeButton(state, player),
                                 leading: player.isReady
                                     ? const Icon(
                                         Icons.check,
@@ -245,6 +217,24 @@ class _RoomPageState extends State<RoomPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget? _removeButton(RiftState state, Player player) {
+    final isOwner = state.player.id == state.room.hostID;
+    final isLocalPlayer = player.id == state.player.id;
+
+    if (!isOwner || isLocalPlayer) {
+      return null;
+    }
+
+    return IconButton(
+      onPressed: () {
+        riftStore.kickPlayer(player);
+      },
+      icon: const Icon(
+        Icons.delete_forever_outlined,
       ),
     );
   }

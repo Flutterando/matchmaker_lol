@@ -1,9 +1,8 @@
 import 'package:app/src/modules/match/domain/entities/team_side.dart';
+import 'package:app/src/modules/match/domain/state/rift_state.dart';
 import 'package:app/src/modules/match/domain/stores/rift_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import '../components/confirmed_player.dart';
 
 class MatchPage extends StatefulWidget {
   const MatchPage({super.key});
@@ -13,6 +12,26 @@ class MatchPage extends StatefulWidget {
 }
 
 class _MatchPageState extends State<MatchPage> {
+  final riftStore = Modular.get<RiftStore>();
+
+  @override
+  void initState() {
+    super.initState();
+    riftStore.addListener(listener);
+  }
+
+  void listener() {
+    if (riftStore.value is! UpdatedRoomRiftState) {
+      Modular.to.pop();
+    }
+  }
+
+  @override
+  void dispose() {
+    riftStore.removeListener(listener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = context.watch<RiftStore>();
@@ -32,99 +51,135 @@ class _MatchPageState extends State<MatchPage> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: [
-          const Flexible(child: SizedBox()),
-          Column(
+          Align(
+            alignment: Alignment.topLeft,
+            child: BackButton(
+              onPressed: () {
+                Modular.to.pop();
+              },
+            ),
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                child: Column(
-                  children: [
-                    Text(
-                      'Flutterando',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 64,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      'Matchmaker',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 64,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              Row(
+              const Flexible(child: SizedBox()),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      const SizedBox(
-                        child: Text(
-                          'Blue Team',
+                  const SizedBox(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Flutterando',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 64,
+                            fontSize: 25,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ),
-                      Container(
-                        width: 480,
-                        color: const Color(0XFF1D1B20),
-                        padding: const EdgeInsets.all(48),
-                        child: ListView.builder(
-                          itemCount: blueTeam.length,
-                          itemBuilder: (context, index) {
-                            final player = blueTeam[index];
-                            return ConfirmedPlayer(
-                              player: player,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.all(22),
-                    width: 2,
-                    height: 600,
-                  ),
-                  Column(
-                    children: [
-                      const SizedBox(
-                        child: Text(
-                          'Red Team',
+                        Text(
+                          'Matchmaker',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 64,
+                            fontSize: 25,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(
+                            child: Text(
+                              'Blue Team',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 40,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 480,
+                            height: 500,
+                            color: const Color(0XFF1D1B20),
+                            padding: const EdgeInsets.all(48),
+                            child: ListView.separated(
+                              itemCount: blueTeam.length,
+                              itemBuilder: (context, index) {
+                                final player = blueTeam[index];
+                                final showYou = player.id == state.player.id;
+                                return ListTile(
+                                  title: Text(player.name),
+                                  subtitle: Text(player.role.name.toUpperCase()),
+                                  trailing: showYou
+                                      ? const Icon(
+                                          Icons.person,
+                                          color: Colors.green,
+                                        )
+                                      : null,
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const Divider();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Container(
-                        width: 480,
-                        color: const Color(0XFF1D1B20),
-                        padding: const EdgeInsets.all(48),
-                        child: ListView.builder(
-                          itemCount: blueTeam.length,
-                          itemBuilder: (context, index) {
-                            final player = redTeam[index];
-                            return ConfirmedPlayer(
-                              player: player,
-                            );
-                          },
-                        ),
+                        color: Colors.white,
+                        margin: const EdgeInsets.all(22),
+                        width: 2,
+                        height: 600,
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            child: Text(
+                              'Red Team',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 40,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 480,
+                            height: 500,
+                            color: const Color(0XFF1D1B20),
+                            padding: const EdgeInsets.all(48),
+                            child: ListView.separated(
+                              itemCount: redTeam.length,
+                              itemBuilder: (context, index) {
+                                final player = redTeam[index];
+                                final showYou = player.id == state.player.id;
+                                return ListTile(
+                                  title: Text(player.name),
+                                  subtitle: Text(player.role.name.toUpperCase()),
+                                  trailing: showYou
+                                      ? const Icon(
+                                          Icons.person,
+                                          color: Colors.green,
+                                        )
+                                      : null,
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const Divider();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
