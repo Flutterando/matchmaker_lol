@@ -15,23 +15,42 @@ sealed class RiftState {
   });
 
   RiftState setRoom(Room room) {
-    return UpdatedRoomRiftState(room: room, error: error, player: player);
+    return UpdatedRoomRiftState(
+      room: room,
+      player: player,
+    );
   }
 
   RiftState createRoom(Room room) {
-    return CreatedRoomRiftState(room: room, error: error, player: player);
+    return CreatedRoomRiftState(
+      room: room,
+      error: error,
+      player: player,
+    );
   }
 
   RiftState setPlayer(Player player) {
-    return UpdatedLocalPlayerRiftState(room: room, error: error, player: player);
+    return UpdatedLocalPlayerRiftState(
+      room: room,
+      error: error,
+      player: player,
+    );
   }
 
   RiftState setError(MatchError error) {
-    return ErrorRiftState(room: error.room ?? room, error: error, player: player);
+    return ErrorRiftState(
+      room: error.room ?? room,
+      error: error,
+      player: player,
+    );
   }
 
   RiftState setLoading() {
-    return LoadingRiftState(room: room, error: error, player: player);
+    return LoadingRiftState(
+      room: room,
+      error: error,
+      player: player,
+    );
   }
 }
 
@@ -40,21 +59,41 @@ class InitRiftState extends RiftState {
 }
 
 class LoadingRiftState extends RiftState {
-  LoadingRiftState({required super.room, super.error, required super.player});
+  LoadingRiftState({
+    required super.room,
+    super.error,
+    required super.player,
+  });
 }
 
 class ErrorRiftState extends RiftState {
-  ErrorRiftState({required super.room, super.error, required super.player});
+  ErrorRiftState({
+    required super.room,
+    super.error,
+    required super.player,
+  });
 }
 
 class UpdatedLocalPlayerRiftState extends RiftState {
-  UpdatedLocalPlayerRiftState({required super.room, super.error, required super.player});
+  UpdatedLocalPlayerRiftState({
+    required super.room,
+    super.error,
+    required super.player,
+  });
 }
 
 class CreatedRoomRiftState extends RiftState {
-  CreatedRoomRiftState({required super.room, super.error, required super.player});
+  CreatedRoomRiftState({
+    required super.room,
+    super.error,
+    required super.player,
+  });
 }
 
 class UpdatedRoomRiftState extends RiftState {
-  UpdatedRoomRiftState({required super.room, super.error, required super.player});
+  UpdatedRoomRiftState({
+    required super.room,
+    super.error,
+    required super.player,
+  });
 }

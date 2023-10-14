@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 import 'package:app/src/modules/match/domain/entities/role.dart';
 
 class Player {

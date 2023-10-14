@@ -13,7 +13,8 @@ abstract class TeamAdapter {
 
   static Team fromMap(dynamic mapRoom) {
     return Team(
-      side: TeamSide.values.firstWhere((element) => element.name == mapRoom['side']),
+      side: TeamSide.values
+          .firstWhere((element) => element.name == mapRoom['side']),
       players: (mapRoom['players'] as List) //
           .map(PlayerAdapter.fromMap)
           .toSet(),

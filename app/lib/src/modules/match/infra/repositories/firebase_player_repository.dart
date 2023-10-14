@@ -51,7 +51,11 @@ class FirebasePlayerRepository implements PlayerRepository {
   AsyncResult<Room, MatchError> leaveRoom(Player player, String roomId) async {
     return riftRepository //
         .getRoom(roomId)
-        .map((room) => room.copyWith(players: room.players..remove(player)))
+        .map(
+          (room) => room.copyWith(
+            players: room.players.where((e) => e.id != player.id).toSet(),
+          ),
+        )
         .flatMap(riftRepository.updateRoom);
   }
 

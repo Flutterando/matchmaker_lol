@@ -9,7 +9,7 @@ abstract class MatchError implements Exception {
 }
 
 class MinimalPlayersMatchError extends MatchError {
-  MinimalPlayersMatchError({super.room, super.trace}) : super('É nessário ter 10 player para iniciar a partida');
+  MinimalPlayersMatchError(super.message, {super.room, super.trace});
 }
 
 class RoleMatchError extends MatchError {
