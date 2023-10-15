@@ -31,23 +31,21 @@ class RiftStore extends ValueNotifier<RiftState> {
       return;
     }
 
-    value = value.createRoom(result.getOrThrow());
+    value = value.setRoom(result.getOrThrow());
 
     await _subscription?.cancel();
     final roomStream = riftRepository.getRoomSnapshot(roomId);
     _subscription = roomStream.listen((room) {
-      final newValue = createRiftUsecase(room).fold(value.setRoom, value.setError);
+      final newValue = createRiftUsecase(room) //
+          .pure(room)
+          .fold(value.setRoom, value.setError);
       value = newValue;
     });
   }
 
   Future<void> enterRoom() async {
-    final newState = await playerRepository //
-        .enterRoom(value.player, value.room.id)
-        .flatMap(createRiftUsecase.call)
-        .fold(value.setRoom, value.setError);
-
-    value = newState;
+    await playerRepository //
+        .enterRoom(value.player, value.room.id);
   }
 
   Future<void> getPlayer() async {
@@ -94,7 +92,7 @@ class RiftStore extends ValueNotifier<RiftState> {
     value = newState;
   }
 
-  Future<void> rematch() async {
+  Future<void> match() async {
     final newValue = await createRiftUsecase //
         .call(value.room)
         .toAsyncResult()

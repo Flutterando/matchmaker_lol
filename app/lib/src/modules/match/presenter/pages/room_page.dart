@@ -39,6 +39,8 @@ class _RoomPageState extends State<RoomPage> {
     final players = state.room.players.toList();
     final isOwner = state.player.id == state.room.hostID;
 
+    final hasMatch = state.room.teams.isNotEmpty && state is! ErrorRiftState;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -168,8 +170,8 @@ class _RoomPageState extends State<RoomPage> {
                                       ),
                                       const SizedBox(width: 5),
                                       FMMButton(
-                                        label: 'Match!',
-                                        onPressed: state is UpdatedRoomRiftState
+                                        label: 'View Match',
+                                        onPressed: hasMatch
                                             ? () {
                                                 Modular.to
                                                     .pushNamed('../match');
@@ -179,11 +181,8 @@ class _RoomPageState extends State<RoomPage> {
                                       if (isOwner) ...[
                                         const SizedBox(width: 5),
                                         FMMButton(
-                                          label: 'Re-Match',
-                                          onPressed:
-                                              state is UpdatedRoomRiftState
-                                                  ? riftStore.rematch
-                                                  : null,
+                                          label: 'Match!',
+                                          onPressed: hasMatch ? riftStore.match : null,
                                         ),
                                       ],
                                     ],
