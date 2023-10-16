@@ -32,7 +32,9 @@ class FMMButton extends StatelessWidget {
         child: child ??
             Text(
               label!,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(
+                color: Colors.white,
+              ),
             ),
       ),
     );
