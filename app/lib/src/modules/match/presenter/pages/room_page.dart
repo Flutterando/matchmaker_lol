@@ -166,7 +166,7 @@ class _RoomPageState extends State<RoomPage> {
                                         const SizedBox(width: 5),
                                         FMMButton(
                                           label: 'Match!',
-                                          onPressed: hasMatch ? riftStore.match : null,
+                                          onPressed: riftStore.match,
                                         ),
                                       ],
                                     ],
