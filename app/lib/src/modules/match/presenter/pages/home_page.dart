@@ -88,6 +88,7 @@ class _HomePageState extends State<HomePage> {
                                 TextField(
                                   onChanged: (value) => roomId = value,
                                 ),
+                                const SizedBox(height: 8),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
