@@ -355,10 +355,11 @@ packages:
   routefly:
     dependency: "direct main"
     description:
-      path: "/Users/jacob/Projects/routefly"
-      relative: false
-    source: path
-    version: "0.0.7"
+      name: routefly
+      sha256: "1ec0427d9ae684198616340e232b5280112248cf2884ad2719c8b2b979542ecc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.11"
   rx:
     dependency: transitive
     description:
