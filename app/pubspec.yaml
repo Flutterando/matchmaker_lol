@@ -42,8 +42,7 @@ dependencies:
   cloud_firestore: ^4.9.3
   flutter_web_plugins:
     sdk: flutter
-  routefly:
-    path: /Users/jacob/Projects/routefly
+  routefly: ^0.0.8
   auto_injector: ^2.0.2
   
 dev_dependencies:
