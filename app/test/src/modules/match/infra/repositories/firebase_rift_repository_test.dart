@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:app/src/modules/match/domain/entities/player.dart';
-import 'package:app/src/modules/match/domain/entities/room.dart';
-import 'package:app/src/modules/match/infra/repositories/firebase_rift_repository.dart';
+import 'package:app/app/rift/domain/entities/player.dart';
+import 'package:app/app/rift/domain/entities/room.dart';
+import 'package:app/app/rift/infra/repositories/firebase_rift_repository.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 

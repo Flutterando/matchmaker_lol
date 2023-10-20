@@ -1,8 +1,8 @@
-import 'package:app/src/modules/match/domain/entities/player.dart';
-import 'package:app/src/modules/match/domain/entities/role.dart';
-import 'package:app/src/modules/match/domain/entities/room.dart';
-import 'package:app/src/modules/match/domain/errors/match_error.dart';
-import 'package:app/src/modules/match/domain/usecases/create_rift.dart';
+import 'package:app/app/rift/domain/entities/player.dart';
+import 'package:app/app/rift/domain/entities/role.dart';
+import 'package:app/app/rift/domain/entities/room.dart';
+import 'package:app/app/rift/domain/errors/match_error.dart';
+import 'package:app/app/rift/domain/usecases/create_rift.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

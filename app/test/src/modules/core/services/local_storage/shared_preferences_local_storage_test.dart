@@ -1,4 +1,4 @@
-import 'package:app/src/modules/core/services/local_storage/shared_preferences_local_storage.dart';
+import 'package:app/app/core/services/local_storage/shared_preferences_local_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
